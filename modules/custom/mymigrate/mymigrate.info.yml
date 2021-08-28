@@ -1,0 +1,19 @@
+name: Mymigrate
+description: Example module with DisplaySuite fields.
+core: 8.x
+core_version_requirement: 8.x || 9.x
+version: 1.x
+type: module
+package: Examples
+dependencies:
+  - migrate
+  - migrate_plus
+  - migrate_tools
+  - config_devel
+
+config_devel:
+  install:
+    - migrate_plus.migration_group.mymigrate
+    - migrate_plus.migration.mymigrate_users
+    - migrate_plus.migration.mymigrate_article_files
+    - migrate_plus.migration.mymigrate_articles
