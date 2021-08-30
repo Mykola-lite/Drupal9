@@ -1,0 +1,9 @@
+services:
+  myevents.myevents_subscriber:
+    class: Drupal\myevents\EventSubscriber\MyeventsSubscriber
+    tags:
+      - { name: event_subscriber }
+#  dummy.commerce_subscriber:
+#    class: Drupal\dummy\EventSubscriber\CommerceSubscriber
+#    tags:
+#      - { name: event_subscriber }
