@@ -7,15 +7,13 @@ namespace Drupal\lazybuilder;
 class LazyRenderer {
 
   /**
-   * Renderer for dummy_node_list theme hook.
+   * Renderer for lazybuilder_node_list theme hook.
    */
-  public function renderNodeList($max_nodes = 10) {
-    $build = [
+  public function renderNodeList($max_nodes = 10): array {
+    return [
       '#theme' => 'lazybuilder_node_list',
       '#limit' => $max_nodes,
     ];
-
-    return $build;
   }
 
 }
