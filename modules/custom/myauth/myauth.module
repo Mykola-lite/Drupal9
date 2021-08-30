@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Main file for hooks and custom functions.
+ */
+
+use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * This hook requires to run `drush entity:updates` (entity-updates for older
+ * versions).
+ */
+function myauth_entity_base_field_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() == 'user') {
+    $fields = [];
+    $fields['myauth_key'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('API Key'))
+      ->setRevisionable(FALSE)
+      ->setTranslatable(FALSE);
+    $fields['myauth_secret'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('API Secret'))
+      ->setRevisionable(FALSE)
+      ->setTranslatable(FALSE);
+    return $fields;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function myauth_form_user_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $user = \Drupal::routeMatch()->getParameter('user');
+  if ($user) {
+    $key_secret = _myauth_get_key_and_secret($user->id());
+
+    $form['myauth_api'] = [
+      '#type' => 'fieldset',
+      '#title' => 'API',
+    ];
+    $form['myauth_api']['key'] = [
+      '#type' => 'item',
+      '#title' => 'Key',
+      '#markup' => $key_secret['key'],
+    ];
+    $form['myauth_api']['secret'] = [
+      '#type' => 'item',
+      '#title' => 'Secret',
+      '#markup' => $key_secret['secret'],
+    ];
+  }
+}
+
+/**
+ * Returns key and secret for API. If the are not exists, generate new one.
+ */
+function _myauth_get_key_and_secret($uid) {
+  $user = User::load($uid);
+
+  if ($user->myauth_key->isEmpty()) {
+    $user->myauth_key->value = Crypt::randomBytesBase64(16);
+    $user->save();
+  }
+
+  if ($user->myauth_secret->isEmpty()) {
+    $user->myauth_secret->value = Crypt::randomBytesBase64(16);
+    $user->save();
+  }
+
+  return [
+    'key' => $user->myauth_key->value,
+    'secret' => $user->myauth_secret->value,
+  ];
+}

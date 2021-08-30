@@ -1,0 +1,6 @@
+name: Myauth
+description: Examples for Authentication Provider
+type: module
+core_version_requirement: 8.x || 9.x
+core: 8.x
+version: 1.x
