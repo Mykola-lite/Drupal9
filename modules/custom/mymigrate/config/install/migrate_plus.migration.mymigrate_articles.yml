@@ -6,7 +6,8 @@ migration_tags:
   - article
 source:
   plugin: csv
-  path: modules/custom/mymigrate/assets/articles.csv
+  module: mymigrate
+  path: assets/articles.csv
   delimiter: ';'
   enclosure: '"'
   header_row_count: 1

@@ -1,0 +1,6 @@
+name: Myroute
+description: 'Drupal 8 Route Subscriber'
+type: module
+core_version_requirement: 8.x || 9.x
+core: 8.x
+version: 8.x-1.0

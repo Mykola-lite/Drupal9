@@ -74,14 +74,14 @@ class CSV extends SourcePluginBase {
       }
     }
 
-    if (empty($this->configuration['columns'])) {
+    if (empty($this->configuration['column_names'])) {
       throw new MigrateException('Columns is must be set.');
     }
     else {
       $this->columns = $this->configuration['columns'];
     }
 
-    if (empty($this->configuration['key'])) {
+    if (empty($this->configuration['keys'])) {
       throw new MigrateException('The key is must be set.');
     }
     else {

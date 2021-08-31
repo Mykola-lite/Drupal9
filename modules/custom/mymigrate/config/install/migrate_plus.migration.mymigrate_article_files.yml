@@ -6,23 +6,28 @@ migration_tags:
   - article
 source:
   plugin: csv
-  path: modules/custom/mymigrate/assets/articles.csv
+  module: mymigrate
+  path: assets/articles.csv
   delimiter: ';'
   enclosure: '"'
   header_row_count: 1
   column_names:
     0:
-      id: 'Article ID'
+      key: id
+      label: 'Article ID'
     1:
-      title: 'Title'
+      key: title
+      label: 'Title'
     2:
-      image_url: 'Promo image URL'
+      key: image_url
+      label: 'Promo image URL'
     3:
-      uid: 'Author ID'
+      key: uid
+      label: 'Author ID'
     4:
-      body: 'Content'
-  keys:
-    - id
+      key: body
+      label: 'Content'
+  key: id
   constants:
     status: 1
     uid: 1
